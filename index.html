@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Una noche para recordar</title>
+  <meta name="description" content="Invitación digital para una noche especial." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #0b0b0d;
+      --bg-alt: #151517;
+      --panel: rgba(255,255,255,.055);
+      --panel-border: rgba(255,255,255,.09);
+      --text: #f5f5f5;
+      --muted: rgba(255,255,255,.7);
+      --white: #ffffff;
+      --black: #111111;
+      --gold: #f1d7a3;
+      --gold-strong: #dcbf7d;
+      --shadow: rgba(0,0,0,.25);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "DM Sans", sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,.08), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(241,215,163,.08), transparent 25%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+
+    .page {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      min-height: 100vh;
+      padding: 36px 22px 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      background: rgba(255,255,255,.06);
+      filter: blur(90px);
+      border-radius: 50%;
+      top: 8%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .eyebrow {
+      position: relative;
+      font-size: 11px;
+      letter-spacing: 4px;
+      opacity: .6;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      position: relative;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(48px, 15vw, 88px);
+      line-height: .9;
+      letter-spacing: -4px;
+      font-weight: 700;
+      max-width: 880px;
+    }
+
+    .hero-subtitle {
+      position: relative;
+      margin-top: 24px;
+      font-size: 16px;
+      opacity: .72;
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .primary-btn, .secondary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      padding: 15px 22px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: transform .2s ease, opacity .2s ease, background .2s ease;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .primary-btn {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .secondary-btn {
+      background: transparent;
+      color: var(--white);
+      border-color: rgba(255,255,255,.18);
+    }
+
+    .primary-btn:hover, .secondary-btn:hover, .rsvp:hover, .discover-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .scroll {
+      position: absolute;
+      bottom: 28px;
+      font-size: 10px;
+      letter-spacing: 3px;
+      opacity: .35;
+      text-transform: uppercase;
+    }
+
+    main {
+      width: min(720px, 100%);
+      margin: auto;
+      padding: 0 20px 74px;
+    }
+
+    section {
+      margin-bottom: 28px;
+    }
+
+    .event-card {
+      padding: 28px 24px;
+      border-radius: 28px;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      text-align: center;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 30px var(--shadow);
+    }
+
+    .event-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      opacity: .45;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+
+    .date {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(24px, 5vw, 30px);
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .place {
+      margin-top: 8px;
+      font-size: 17px;
+      opacity: .7;
+    }
+
+    .location-icon { margin-right: 5px; }
+
+    .rsvp {
+      display: block;
+      width: 100%;
+      margin-top: 18px;
+      padding: 17px 20px;
+      border-radius: 16px;
+      background: #ffffff;
+      color: #111111;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: transform .2s ease, opacity .2s ease;
+    }
+
+    .rsvp:active { transform: scale(.97); opacity: .85; }
+
+    .countdown-wrap {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .countdown-box {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 20px;
+      padding: 18px 12px;
+      text-align: center;
+    }
+
+    .countdown-number {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(22px, 5vw, 36px);
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .countdown-label {
+      display: block;
+      margin-top: 8px;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: .5;
+    }
+
+    .music-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.04);
+    }
+
+    .music-icon {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.08);
+      font-size: 22px;
+    }
+
+    .music-info {
+      flex: 1;
+      text-align: left;
+    }
+
+    .music-label {
+      display: block;
+      font-size: 9px;
+      letter-spacing: 2px;
+      opacity: .45;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+    }
+
+    .music-info h3 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .music-info p {
+      margin-top: 2px;
+      font-size: 13px;
+      opacity: .55;
+    }
+
+    .music-btn {
+      width: 46px;
+      height: 46px;
+      min-width: 46px;
+      border: none;
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--black);
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform .2s ease;
+    }
+
+    .music-btn:active { transform: scale(.9); }
+    .music-btn.playing { animation: pulse 1.5s infinite; }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+
+    .surprise {
+      padding: 34px 24px;
+      text-align: center;
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.025));
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .surprise-small {
+      font-size: 10px;
+      letter-spacing: 3px;
+      opacity: .4;
+      text-transform: uppercase;
+    }
+
+    .surprise h2 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(24px, 6vw, 36px);
+      margin-top: 10px;
+    }
+
+    .surprise p {
+      margin-top: 8px;
+      font-size: 14px;
+      opacity: .6;
+      line-height: 1.7;
+    }
+
+    .discover-btn {
+      margin-top: 22px;
+      border: 1px solid rgba(255,255,255,.2);
+      background: transparent;
+      color: var(--white);
+      border-radius: 14px;
+      padding: 13px 22px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: background .2s ease;
+    }
+
+    .discover-btn:active { background: rgba(255,255,255,.1); }
+
+    .coupon-wrapper {
+      display: none;
+      margin-top: 24px;
+      animation: appear .7s ease forwards;
+    }
+
+    .coupon-wrapper.show { display: block; }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .coupon {
+      position: relative;
+      padding: 35px 24px;
+      border-radius: 26px;
+      background: #f5f2e9;
+      color: #161616;
+      text-align: center;
+      overflow: hidden;
+      box-shadow: 0 18px 26px var(--shadow);
+    }
+
+    .coupon::before, .coupon::after {
+      content: "";
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: var(--bg);
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .coupon::before { left: -13px; }
+    .coupon::after { right: -13px; }
+
+    .coupon-top {
+      font-size: 10px;
+      letter-spacing: 3px;
+      opacity: .5;
+      text-transform: uppercase;
+    }
+
+    .coupon h2 {
+      margin-top: 12px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(24px, 6vw, 32px);
+    }
+
+    .coupon-main {
+      margin-top: 18px;
+      padding: 20px 10px;
+      border-top: 1px dashed rgba(0,0,0,.25);
+      border-bottom: 1px dashed rgba(0,0,0,.25);
+    }
+
+    .coupon-main strong {
+      display: block;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(26px, 8vw, 38px);
+      letter-spacing: 1px;
+    }
+
+    .coupon-main span {
+      display: block;
+      margin-top: 5px;
+      font-size: 12px;
+      opacity: .6;
+    }
+
+    .coupon-description {
+      margin-top: 18px;
+      font-size: 13px;
+      line-height: 1.6;
+      opacity: .7;
+    }
+
+    .coupon-description strong {
+      display: block;
+      margin-top: 10px;
+    }
+
+    footer {
+      padding: 20px 20px 40px;
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: 2px;
+      opacity: .3;
+      text-transform: uppercase;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--white);
+      color: var(--black);
+      padding: 12px 18px;
+      border-radius: 30px;
+      font-size: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all .3s ease;
+      z-index: 100;
+      white-space: nowrap;
+      box-shadow: 0 10px 24px rgba(0,0,0,.2);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (min-width: 700px) {
+      .hero { min-height: 85vh; }
+      main { padding-left: 0; padding-right: 0; }
+    }
+
+    @media (max-width: 520px) {
+      .hero-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .primary-btn, .secondary-btn {
+        width: 100%;
+      }
+
+      .countdown-wrap {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="eyebrow">You're invited</div>
+      <h1>Una noche<br />para recordar.</h1>
+      <p class="hero-subtitle">Porque hay noches que merecen una invitación, música, risas y recuerdos que se quedan para siempre.</p>
+
+      <div class="hero-actions">
+        <a class="primary-btn" href="#confirmar">Confirmar asistencia</a>
+        <a class="secondary-btn" href="#detalles">Ver detalles</a>
+        <a class="secondary-btn" href="https://wa.me/?text=Te%20invito%20a%20mi%20invitaci%C3%B3n%20digital%3A%20https%3A%2F%2Fborundis.github.io%2Funa-noche-para-recordar%2F" target="_blank" rel="noopener noreferrer">Compartir</a>
+        <button id="copyLinkBtn" class="secondary-btn" type="button">Copiar enlace</button>
+      </div>
+
+      <div class="scroll">Desliza ↓</div>
+    </header>
+
+    <main>
+      <section class="event-card" id="detalles">
+        <div class="event-label">La cita</div>
+        <div class="date">Jueves · 8 de octubre · 2026</div>
+        <div class="place"><span class="location-icon">📍</span>Rock and Bowl</div>
+
+        <a class="rsvp" href="https://wa.me/526143972023?text=Hola%2C%20quiero%20confirmar%20mi%20asistencia" target="_blank" rel="noopener noreferrer">Confirmar asistencia</a>
+
+        <div class="countdown-wrap" aria-label="Cuenta regresiva para el evento">
+          <div class="countdown-box">
+            <div class="countdown-number" id="days">00</div>
+            <span class="countdown-label">Días</span>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-number" id="hours">00</div>
+            <span class="countdown-label">Horas</span>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-number" id="minutes">00</div>
+            <span class="countdown-label">Minutos</span>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-number" id="seconds">00</div>
+            <span class="countdown-label">Segundos</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="music-section">
+        <div class="music-icon">♪</div>
+        <div class="music-info">
+          <span class="music-label">La canción de esta noche</span>
+          <h3>Bien Hecho</h3>
+          <p>Humbe</p>
+        </div>
+        <button id="musicBtn" class="music-btn" aria-label="Reproducir música">▶</button>
+        <audio id="musicPlayer" preload="auto" src="tu-cancion.mp3"></audio>
+      </section>
+
+      <section class="surprise" id="confirmar">
+        <div class="surprise-small">Pero espera...</div>
+        <h2>Tenemos algo más para ti.</h2>
+        <p>Porque una noche así no podía terminar aquí. Descubre este pequeño detalle pensado especialmente para ti.</p>
+        <button id="discoverBtn" class="discover-btn">Descubrir</button>
+      </section>
+
+      <section id="couponWrapper" class="coupon-wrapper">
+        <div class="coupon">
+          <div class="coupon-top">Oh oh...</div>
+          <h2>Una disculpa.</h2>
+          <div class="coupon-main">
+            <strong>DESAYUNO</strong>
+            <span>Válido el sábado por la mañana</span>
+          </div>
+          <p class="coupon-description">Debido a los acontecimientos no ocurridos este próximo jueves, aquí tienes un pequeño detalle para seguir celebrando.</p>
+          <p class="coupon-description"><strong>DESAYUNO · SÁBADO</strong></p>
+          <p class="coupon-description">Presenta esta invitación para hacer válido tu cupón.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>Nos vemos en la pista. 🎳</footer>
+  </div>
+
+  <div id="toast" class="toast">Bien Hecho · Humbe</div>
+
+  <script>
+    const eventDate = new Date('2026-10-08T19:30:00');
+
+    function updateCountdown() {
+      const diff = eventDate - new Date();
+      if (diff <= 0) {
+        document.getElementById('days').textContent = '00';
+        document.getElementById('hours').textContent = '00';
+        document.getElementById('minutes').textContent = '00';
+        document.getElementById('seconds').textContent = '00';
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById('days').textContent = String(days).padStart(2, '0');
+      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    const musicBtn = document.getElementById('musicBtn');
+    const musicPlayer = document.getElementById('musicPlayer');
+    const toast = document.getElementById('toast');
+    let toastTimeout;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    musicBtn.addEventListener('click', async () => {
+      if (musicPlayer.paused) {
+        try {
+          await musicPlayer.play();
+          musicBtn.innerHTML = '❚❚';
+          musicBtn.classList.add('playing');
+          showToast('♫ Bien Hecho · Humbe');
+        } catch (error) {
+          showToast('Toca nuevamente para reproducir');
+        }
+      } else {
+        musicPlayer.pause();
+        musicBtn.innerHTML = '▶';
+        musicBtn.classList.remove('playing');
+      }
+    });
+
+    musicPlayer.addEventListener('ended', () => {
+      musicBtn.innerHTML = '▶';
+      musicBtn.classList.remove('playing');
+    });
+
+    const discoverBtn = document.getElementById('discoverBtn');
+    const couponWrapper = document.getElementById('couponWrapper');
+
+    discoverBtn.addEventListener('click', () => {
+      couponWrapper.classList.add('show');
+      discoverBtn.innerHTML = 'Ya lo viste';
+      discoverBtn.disabled = true;
+      setTimeout(() => {
+        couponWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 150);
+    });
+
+    const copyLinkBtn = document.getElementById('copyLinkBtn');
+    const inviteURL = window.location.origin && window.location.origin !== 'null'
+      ? window.location.href
+      : 'https://borundis.github.io/una-noche-para-recordar/';
+
+    copyLinkBtn.addEventListener('click', async () => {
+      let copied = false;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        try {
+          await navigator.clipboard.writeText(inviteURL);
+          copied = true;
+        } catch (e) {
+          copied = false;
+        }
+      }
+      if (!copied) {
+        try {
+          const textArea = document.createElement('textarea');
+          textArea.value = inviteURL;
+          textArea.style.position = 'fixed';
+          textArea.style.left = '-9999px';
+          textArea.style.top = '0';
+          document.body.appendChild(textArea);
+          textArea.focus();
+          textArea.select();
+          copied = document.execCommand('copy');
+          document.body.removeChild(textArea);
+        } catch (e) {
+          copied = false;
+        }
+      }
+      if (copied) {
+        showToast('Enlace copiado');
+      } else {
+        showToast('No se pudo copiar');
+      }
+    });
+  </script>
+</body>
+</html>

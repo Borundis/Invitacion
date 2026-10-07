@@ -1,0 +1,14 @@
+{
+  "name": "una-noche-para-recordar",
+  "version": "1.0.0",
+  "description": "Invitación digital para una noche especial",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "build": "node -e 'console.log(\"Build successful\")'"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

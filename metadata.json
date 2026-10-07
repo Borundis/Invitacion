@@ -1,0 +1,8 @@
+{
+  "name": "Una noche para recordar",
+  "description": "Invitación digital para una noche especial.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
